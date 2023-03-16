@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "arma-reforger.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "arma-reforger.labels" . | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  armarserver.server.json: |-
+    {
+        "dedicatedServerId": {{ .Values.config.dedicatedServerID | quote }},
+        "region": {{ .Values.config.region | quote }},
+        "gameHostBindAddress": {{ .Values.config.gameHostBindAddress | quote }},
+        "gameHostBindPort": {{ .Values.config.gameHostBindPort }},
+        "gameHostRegisterBindAddress": {{ .Values.config.gameHostRegisterBindAddress | quote }},
+        "gameHostRegisterPort": {{ .Values.config.gameHostRegisterBindPort }},
+        "adminPassword": {{ include "adminPassword" . | quote }},
+        "game": {
+            "name": {{ .Values.config.name | quote }},
+            "password": {{ include "serverPassword" . | quote }},
+            "scenarioId": {{ .Values.config.scenarioID | quote }},
+            "playerCountLimit": {{ .Values.config.playerCountLimit }},
+            "autoJoinable": {{ .Values.config.autoJoinable }},
+            "visible": {{ .Values.config.visible }},
+            "gameProperties": {
+                "serverMaxViewDistance": {{ .Values.config.serverMaxViewDistance }},
+                "serverMinGrassDistance": {{ .Values.config.serverMinGrassDistance }},
+                "networkViewDistance": {{ .Values.config.networkViewDistance }},
+                "disableThirdPerson": {{ .Values.config.disableThirdPerson }},
+                "fastValidation": {{ .Values.config.fastvalidation }},
+                "battlEye": {{ .Values.config.battleeye }}
+            },
+            "mods": []
+        },
+        "a2sQueryEnabled": true,
+        "steamQueryPort": 17777
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "arma-reforger.fullname" . }}-common
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "arma-reforger.labels" . | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  common.cfg: |-
+    ## Server Config
+    {{- if .Values.config.serverConfigPath }}
+    servercfgfullpath={{ .Values.config.serverConfigPath | quote }}
+    {{- end }}
+
+    {{- if .Values.config.commonConfigPath }}
+    commoncfgfullpath={{ .Values.config.commonConfigPath | quote }}
+    {{- end }}
+
+    {{- if .Values.config.maxFPS }}
+    maxfps={{ .Values.config.maxFPS | quote }}
+    {{- end }}
+
+    ## Discord webhook alerts
+    {{- if .Values.alerts.discord }}
+    discordalert="on"
+    discordwebhook={{ .Values.alerts.discord | quote }}
+    {{- end }}

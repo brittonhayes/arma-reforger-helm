@@ -1,0 +1,40 @@
+# https://taskfile.dev
+
+version: '3'
+
+dotenv: ['.env']
+
+vars:
+  ChartPath: ./charts/arma-reforger
+
+tasks:
+  default:
+    cmds:
+    - task: helm
+    silent: true
+
+  build:
+    desc: Build docker image
+    cmds:
+    - docker build -t ghcr.io/brittonhayes/arma-reforger-helm .
+
+  helm:
+    desc: Execute helm template and documentation generation
+    cmds:
+    - helm template arma-reforger {{ .ChartPath }} | kubeconform -summary
+    - helm-docs -c {{ .ChartPath }}
+
+  helm:install:
+    desc: Install helm chart to cluster
+    cmds:
+    - helm -n arma-reforger install arma-reforger {{ .ChartPath }} --values values.yaml
+
+  helm:upgrade:
+    desc: Release helm chart to cluster
+    cmds:
+    - helm upgrade -n arma-reforger --values values.yaml --install arma-reforger {{ .ChartPath }}
+
+  helm:uninstall:
+    desc: Uninstall helm chart from cluster
+    cmds:
+    - helm -n arma-reforger uninstall arma-reforger

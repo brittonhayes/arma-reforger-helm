@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "arma-reforger.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "arma-reforger.labels" . | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  strategy:
+    type: Recreate
+  {{- if .Values.replicas }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "arma-reforger.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: server
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: "server"
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "arma-reforger.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: server
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "arma-reforger.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: server
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.config.gameHostBindPort }}
+              protocol: UDP
+            - containerPort: {{ .Values.config.steamQueryPort }}
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: {{ .Values.config.serverConfigPath }} 
+              subPath: armarserver.server.json
+              readOnly: true
+            - name: commonconfig
+              mountPath: {{ .Values.config.commonConfigPath }}
+              subPath: common.cfg
+              readOnly: true
+            - name: data
+              mountPath: /linuxgsm/serverfiles
+              readOnly: false
+            - name: profile
+              mountPath: /linuxgsm/serverfiles/profiles
+              readOnly: false
+            - name: tmp
+              mountPath: /tmp
+              readOnly: false
+            - name: home
+              mountPath: /home/steam
+              readOnly: false
+            - name: steamcmd
+              mountPath: /steamcmd
+              readOnly: false
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "arma-reforger.fullname" . }}
+        - name: commonconfig
+          configMap:
+            name: {{ include "arma-reforger.fullname" . }}-common
+        - name: data
+          {{- if .Values.persistence.data.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "arma-reforger.fullname" . }}-data
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: profile
+          {{- if .Values.persistence.profile.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "arma-reforger.fullname" . }}-profile
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: tmp
+          emptyDir:
+            medium: Memory
+        - name: home
+          emptyDir: {}
+        - name: steamcmd
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

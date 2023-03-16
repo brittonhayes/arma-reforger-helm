@@ -1,0 +1,13 @@
+apiVersion: v2
+name: arma-reforger
+description: A Helm chart for ARMA reforger on LinuxGSM.
+type: application
+maintainers:
+- name: Britton Hayes
+  url: https://github.com/brittonhayes
+version: 0.1.7
+appVersion: "1.16.0"
+keywords:
+- arma-reforger
+- GameServers
+- linuxgsm

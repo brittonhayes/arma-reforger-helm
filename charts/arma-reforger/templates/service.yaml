@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "arma-reforger.fullname" . }}
+  namespace: {{ .Release.Namespace }} 
+  labels:
+    {{- include "arma-reforger.labels" . | nindent 4 }}
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: udp-1
+      port: {{ .Values.config.gameHostBindPort }}
+      targetPort: {{ .Values.config.gameHostBindPort }}
+      nodePort: 32001
+      protocol: UDP
+    - name: udp-2
+      port: {{ .Values.config.steamQueryPort }}
+      targetPort: {{ .Values.config.steamQueryPort }}
+      nodePort: 32002
+      protocol: UDP
+ 
+  selector:
+    {{- include "arma-reforger.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: server
