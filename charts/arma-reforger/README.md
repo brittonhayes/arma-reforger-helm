@@ -1,6 +1,6 @@
 # arma-reforger
 
-![Version: 0.1.7](https://img.shields.io/badge/Version-0.1.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
 
 A Helm chart for ARMA reforger on LinuxGSM.
 
@@ -34,7 +34,7 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | config.networkViewDistance | int | `500` | Maximum network streaming range of replicated entities.  |
 | config.playerCountLimit | int | `20` | Set the maximum amount of players on the server.  |
 | config.region | string | `"US"` | ISO 3166-1 alpha-2 values are accepted - https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 |
-| config.scenarioID | string | `""` | See the listScenarios startup parameter to list available scenarios and obtain their .conf file path.  |
+| config.scenarioID | string | `"{ECC61978EDCC2B5A}Missions/23_Campaign.conf"` | See the listScenarios startup parameter to list available scenarios and obtain their .conf file path.  |
 | config.serverConfigPath | string | `"/linuxgsm/lgsm/config-lgsm/armarserver/armarserver.server.json"` | Server config path |
 | config.serverMaxViewDistance | int | `1600` | number value, range 500..10000, default: 1600  |
 | config.serverMinGrassDistance | int | `0` | Minimum grass distance in meters. If set to 0 no distance is forced upon clients.  |
@@ -75,6 +75,13 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
+| serviceMonitor.enabled | bool | `false` | - If true, a ServiceMonitor CRD is created for a prometheus operator |
+| serviceMonitor.interval | string | `"10s"` |  |
+| serviceMonitor.labels | object | `{}` |  |
+| serviceMonitor.path | string | `"/metrics"` |  |
+| serviceMonitor.relabelings | list | `[]` |  |
+| serviceMonitor.scheme | string | `"http"` |  |
+| serviceMonitor.scrapeTimeout | string | `"2s"` |  |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------

@@ -19,6 +19,9 @@ EXPOSE 17777/udp
 # Insecure workaround for failing symlink during install
 RUN sudo chown -R linuxgsm:linuxgsm /root
 
+COPY --chmod=0644 ./scripts/gameserver-cron /etc/cron.d/gameserver-cron
+RUN crontab /etc/cron.d/gameserver-cron
+
 ENTRYPOINT [ "/init" ]
 
 CMD ["./entrypoint.sh"]

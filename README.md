@@ -46,6 +46,11 @@ config:
   gameHostBindPort: 32001 # Public Port of the server
   gameHostRegisterBindAddress: 73.XXX.XXX.XXX # Public IP of the server
   gameHostRegisterBindPort: 32001 # Public Port of the server
+  scenarioID: "{59AD59368755F41A}Missions/21_GM_Eden.conf" # Scenario ID for "Game Master - Everon"
+
+  # {90F086877C27B6F6}Missions/99_Tutorial.conf - Tutorial
+  # {ECC61978EDCC2B5A}Missions/23_Campaign.conf - Conflict
+  # {59AD59368755F41A}Missions/21_GM_Eden.conf - Game Master - Everon
 
 credentials:
   adminPassword: mysupersecretadminpassword

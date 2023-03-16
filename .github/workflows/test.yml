@@ -1,0 +1,22 @@
+name: Chart Lint
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+    
+      - name: Lint Helm charts
+        uses: helm/chart-testing-action@v1.0.0
+        with:
+          command: lint
+          config: ct.yaml
