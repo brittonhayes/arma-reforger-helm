@@ -1,6 +1,6 @@
 # ARMA Reforger Helm Chart
 
-A helm chart for deploying [ARMA Reforger](https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting) dedicated linux server to kubernetes clusters via helm.
+A helm chart for deploying an [ARMA Reforger](https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting) dedicated linux server to kubernetes clusters via helm.
 
 [Helm Docs](./charts/arma-reforger/README.md)
 
