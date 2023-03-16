@@ -1,6 +1,6 @@
 # ARMA Reforger Helm Chart
 
-A helm chart for deploying [ARMA Reforger](https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting) dedicated linux server to kubernetes clusters via helm.
+A helm chart for deploying an [ARMA Reforger](https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting) dedicated linux server to kubernetes clusters via helm.
 
 [Helm Docs](./charts/arma-reforger/README.md)
 
@@ -16,8 +16,17 @@ To use with helm, run the following command after setting the environment variab
 # Create a values file with your configuration settings
 touch values.yaml
 
-# Install the helm chart
-helm -n arma-reforger install arma-reforger ./charts --values values.yaml
+# Create a namespace for your server
+kubectl create ns arma-reforger
+
+# Add the helm repository to your cluster
+helm repo add https://brittonhayes.github.io/arma-reforger-helm
+
+# Install the helm chart into the namespace
+helm install -n arma-reforger --values values.yaml arma-reforger/arma-reforger arma-reforger
+
+# OR Upgrade the helm chart
+helm upgrade -n arma-reforger --values values.yaml --install arma-reforger arma-reforger/arma-reforger
 ```
 
 ## Configuration
