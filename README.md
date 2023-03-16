@@ -2,7 +2,7 @@
 
 An Arma 3 Dedicated Server. Updates to the latest version every time it is restarted.
 
-[Helm Docs](./charts/README.md)
+[Helm Docs](./charts/arma-reforger/README.md)
 
 [Docker Image](https://github.com/brittonhayes/arma-reforger-helm/packages)
 
