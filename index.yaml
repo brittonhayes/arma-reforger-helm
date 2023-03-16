@@ -3,6 +3,23 @@ entries:
   arma-reforger:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2023-03-16T07:13:36.507638212Z"
+    description: A Helm chart for ARMA reforger on LinuxGSM.
+    digest: ec313d1547df0e2242e07067ff0099093771138e5324e85cc501c41c42aafd1e
+    keywords:
+    - arma-reforger
+    - GameServers
+    - linuxgsm
+    maintainers:
+    - name: Britton Hayes
+      url: https://github.com/brittonhayes
+    name: arma-reforger
+    type: application
+    urls:
+    - https://github.com/brittonhayes/arma-reforger-helm/releases/download/arma-reforger-0.1.9/arma-reforger-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2023-03-16T04:46:10.776943473Z"
     description: A Helm chart for ARMA reforger on LinuxGSM.
     digest: 7094a432a39ff229a47d2d1f8f699945754183218bd6565dffee0df005362e83
@@ -18,4 +35,4 @@ entries:
     urls:
     - https://github.com/brittonhayes/arma-reforger-helm/releases/download/arma-reforger-0.1.8/arma-reforger-0.1.8.tgz
     version: 0.1.8
-generated: "2023-03-16T04:46:10.776957673Z"
+generated: "2023-03-16T07:13:36.507649712Z"
