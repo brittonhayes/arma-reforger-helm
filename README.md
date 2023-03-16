@@ -1,6 +1,6 @@
-# Arma 3 Dedicated Server
+# ARMA Reforger Helm Chart
 
-An Arma 3 Dedicated Server. Updates to the latest version every time it is restarted.
+A helm chart for deploying [ARMA Reforger](https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting) dedicated linux server to kubernetes clusters via helm.
 
 [Helm Docs](./charts/arma-reforger/README.md)
 
