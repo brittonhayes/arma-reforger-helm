@@ -5,7 +5,7 @@ type: application
 maintainers:
 - name: Britton Hayes
   url: https://github.com/brittonhayes
-version: 0.1.9
+version: 0.2.0
 appVersion: "1.16.0"
 keywords:
 - arma-reforger

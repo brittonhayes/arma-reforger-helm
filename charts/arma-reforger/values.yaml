@@ -1,0 +1,220 @@
+# -- Only one replica is supported at this time
+replicas: 1
+
+image:
+  pullPolicy: IfNotPresent
+  repository: ghcr.io/brittonhayes/arma-reforger 
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # -- If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+deploymentAnnotations:
+  # -- To automatically reload the container on configuration changes, use
+  reloader.stakater.com/auto: "true"
+
+podAnnotations: {}
+
+podSecurityContext:
+  # fsGroup: 433
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: false
+  # runAsNonRoot: false
+  # runAsUser: 431
+  # runAsGroup: 433
+
+service:
+  type: NodePort 
+  annotations: {}
+
+resources: {}
+
+config:
+  # -- External Hostname of server
+  # -- length 0..100 characters 
+  name: arma-reforger-server.example.com
+
+  # -- The scenario's .conf file path is defined here. 
+  # -- See the listScenarios startup parameter to list available scenarios and obtain their .conf file path. 
+  scenarioID: "{ECC61978EDCC2B5A}Missions/23_Campaign.conf"
+
+  dedicatedServerID: ""
+
+  # -- IP address which server socket will be bound to. In most cases, this should be left empty. It can be used to restrict connections to particular network interface. 
+  # -- When left out or empty, 0.0.0.0 is used, which allows connections through any IP address. 
+  gameHostBindAddress: 0.0.0.0
+
+  # -- number value, range 1..65535, default: 2001
+  # -- UDP port to which the server socket will be bound. 
+  gameHostBindPort: 2001 
+
+  # -- IP address registered in backend. This should be set to the public IP address to which clients can connect in order to reach the server (either IP of the server itself or IP of the machine that will forward data to the server). 
+  # -- When left out or empty, an attempt is made to automatically determine the IP address, but this will often fail and should not be relied upon as the server might not be reachable from public networks. 
+  gameHostRegisterBindAddress: 0.0.0.0
+
+  # -- number value, range 1..65535, default: 2001
+  # -- UDP port registered in backend. If the server itself has a public IP address, this should be the same value as in gameHostBindPort. 
+  # -- Otherwise, this is the UDP port that is forwarded to the server.  
+  gameHostRegisterBindPort: 2001
+
+  # -- number value, range 1..65535, default: 17777
+  # -- Change Steam Query UDP port on which game listens to A2S requests 
+  steamQueryPort: 17777
+
+  # -- ID / name of region - it is needed when the server registers the launched game in the Lobby.
+  # -- ISO 3166-1 alpha-2 values are accepted - https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+  region: "US"
+
+  # -- Set if the session can be selected through the auto join feature. 
+  autoJoinable: false
+
+  # -- Set the visibility of the server in the Server Browser.
+  visible: true
+
+  # -- number value, range 0 / 50..150, default: 0 
+  # -- Minimum grass distance in meters. If set to 0 no distance is forced upon clients. 
+  serverMinGrassDistance: 0
+
+  # -- number value, range 500..10000, default: 1600 
+  serverMaxViewDistance: 1600
+
+  # -- number value, range 500.5000, default: 500 
+  # -- Maximum network streaming range of replicated entities. 
+  networkViewDistance: 500
+
+  # -- Force clients to use the first-person view.
+  # -- true=enabled, false=disabled
+  disableThirdPerson: false
+
+  # -- As of 0.9.7 it is heavily recommended to use this startup parameter, set to a value in the 60..120 range; 
+  # -- otherwise, the server can try to use all the available resources!
+  maxFPS: 60
+
+  # -- Validation of map entities and components loaded on client when it joins, ensuring things match with initial server state.
+  # --   true (enabled) - minimum information required to make sure data matches is exchanged between client. When a mismatch occurs, no additional information will be available for determining where client and server states start to differ. All servers that expect clients to connect over internet should have fast validation enabled.
+  # --   false (disabled) - extra data for every replicated entity and component in the map will be transferred when new client connects to the server. When a mismatch occurs, it is possible to point at particular entity or component where things start to differ. When developing locally (ie. both server and client run on the same machine), it is fine to disable fast validation to more easily pin point source of the problem.
+  fastvalidation: true
+
+  # -- true=enabled, false=disabled
+  battleeye: true
+
+  # -- List of administrators
+  admins: []
+
+  # -- List of mods
+  mods: []
+
+  # -- array value, default: ["PLATFORM_PC"]
+  # -- Define the platforms which the server accepts, allowing crossplay. 
+  # -- A server cannot be Xbox-exclusive; if configured with only PLATFORM_XBL, the server will not start.
+  supportedGameClientTypes: [ "PLATFORM_PC", "PLATFORM_XBL" ]
+
+  # -- Set the maximum amount of players on the server. 
+  playerCountLimit: 20
+
+  # -- Server config path
+  serverConfigPath: /linuxgsm/lgsm/config-lgsm/armarserver/armarserver.server.json
+
+  # -- Common config path
+  commonConfigPath: /linuxgsm/lgsm/config-lgsm/armarserver/common.cfg
+
+
+# -- Webook alerts configurations
+alerts:
+  # -- Discord webhook URL
+  discord: ""
+
+
+persistence:
+  data:
+    # ARMA REFORGER Data (all game assets except the config/profiles/main)
+    enabled: true
+    annotations: {}
+    ## arma Reforger data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass: "hostpath"
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    # existingClaim:
+
+    accessMode: ReadWriteOnce
+
+    # -- Size of the persistent volume claim (set this closer to 100Gi if you want to use quite a few mods)
+    size: 40Gi
+
+  profile:
+    # ARMA REFORGER Profiles
+    # -- WARNING: if you set this to false, your progress in Antistasi will be lost on a server restart
+    enabled: true
+    annotations: {}
+    ## arma Reforger data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass: "hostpath"
+
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    # existingClaim:
+
+    accessMode: ReadWriteOnce
+    size: 2Gi
+
+# -- Specify credentials for the server
+credentials:
+  serverPassword: ""
+  adminPassword: ""
+
+  useExistingSecret:
+    # -- Use a dedicated, already existing secret for credentials, any key already specified under 'credentials.' directly will be ignored
+    enabled: false
+    # -- The credential is looked up from a secret, which resides in this namespace
+    # if empty, use Release.Namespace
+    namespace: ""
+    # -- The credential is looked up from a secret with this name
+    name: ""
+    # -- The Server Password
+    serverPasswordKey: server-password
+    # -- The Server ADMIN Password
+    adminPasswordKey: admin-password
+
+serviceMonitor:
+  # --- If true, a ServiceMonitor CRD is created for a prometheus operator
+  enabled: false
+  path: /metrics
+  #  namespace: (defaults to use the namespace this chart is deployed to)
+  labels: {}
+  interval: 10s
+  scheme: http
+  scrapeTimeout: 2s
+  relabelings: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
