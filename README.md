@@ -2,6 +2,8 @@
 
 A helm chart for deploying an [ARMA Reforger](https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting) dedicated linux server to kubernetes clusters via helm.
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/arma-reforger)](https://artifacthub.io/packages/search?repo=arma-reforger)
+
 [Helm Docs](./charts/arma-reforger/README.md)
 
 [Docker Image](https://github.com/brittonhayes/arma-reforger-helm/packages)
