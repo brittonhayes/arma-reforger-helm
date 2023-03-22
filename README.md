@@ -67,6 +67,20 @@ resources:
     memory: 4G
 ```
 
+Add mods to your server
+
+```yaml
+# Adding mods
+config:
+  mods:
+  - modId: "59A30ACC02650E71"
+    name: "Night Vision System"
+    version: "1.1.3"
+  - modId: "5A64DE35CCD36695"
+    name: "3rd Ranger Battalion Modpack"
+    version: "0.7.11"
+```
+
 # Acknowledgements
 
 - Helm chart design heavily based on the work by [fbuchmeier](https://github.com/fbuchmeier)

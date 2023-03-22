@@ -1,6 +1,6 @@
 # arma-reforger
 
-![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
 
 A Helm chart for ARMA reforger on LinuxGSM.
 
@@ -29,7 +29,7 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | config.gameHostRegisterBindAddress | string | `"0.0.0.0"` | When left out or empty, an attempt is made to automatically determine the IP address, but this will often fail and should not be relied upon as the server might not be reachable from public networks.  |
 | config.gameHostRegisterBindPort | int | `2001` | Otherwise, this is the UDP port that is forwarded to the server.   |
 | config.maxFPS | int | `60` | otherwise, the server can try to use all the available resources! |
-| config.mods | list | `[]` | List of mods |
+| config.mods | list | `[]` | version: "0.7.11"  |
 | config.name | string | `"arma-reforger-server.example.com"` | length 0..100 characters  |
 | config.networkViewDistance | int | `500` | Maximum network streaming range of replicated entities.  |
 | config.playerCountLimit | int | `20` | Set the maximum amount of players on the server.  |

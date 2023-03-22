@@ -22,8 +22,13 @@ tasks:
   helm:
     desc: Execute helm template and documentation generation
     cmds:
-    - helm template arma-reforger {{ .ChartPath }} | kubeconform -summary
+    - task: helm:tpl
     - helm-docs -c {{ .ChartPath }}
+
+  helm:tpl:
+    desc: Execute helm template
+    cmds:
+    - helm template arma-reforger {{ .ChartPath }} --values {{ .ValuesFile }}
 
   helm:install:
     desc: Install helm chart to cluster

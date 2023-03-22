@@ -34,7 +34,7 @@ data:
                 "fastValidation": {{ .Values.config.fastvalidation }},
                 "battlEye": {{ .Values.config.battleeye }}
             },
-            "mods": []
+            "mods": [{{ include "mods" . }}]
         },
         "a2sQueryEnabled": true,
         "steamQueryPort": 17777
