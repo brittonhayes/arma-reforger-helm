@@ -2,10 +2,11 @@ apiVersion: v2
 name: arma-reforger
 description: A Helm chart for ARMA reforger on LinuxGSM.
 type: application
+icon: https://raw.githubusercontent.com/brittonhayes/arma-reforger-helm/main/.github/reforger-helm-square-logo.png
 maintainers:
 - name: Britton Hayes
   url: https://github.com/brittonhayes
-version: 0.3.0
+version: 0.3.1
 appVersion: "1.16.0"
 keywords:
 - arma-reforger
