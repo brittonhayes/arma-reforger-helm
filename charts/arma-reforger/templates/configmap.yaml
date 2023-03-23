@@ -58,6 +58,10 @@ data:
     servercfgfullpath={{ .Values.config.serverConfigPath | quote }}
     {{- end }}
 
+    {{- if .Values.config.startParameters }}
+    startparameters="-config ${servercfgfullpath} -profile ${serverprofilefullpath} -maxFPS ${maxfps} {{ .Values.config.startParameters }}"
+    {{- end }}
+
     {{- if .Values.config.commonConfigPath }}
     commoncfgfullpath={{ .Values.config.commonConfigPath | quote }}
     {{- end }}

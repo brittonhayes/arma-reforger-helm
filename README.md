@@ -67,7 +67,7 @@ resources:
     memory: 4G
 ```
 
-Add mods to your server
+Add a couple mods to your server. All mods will be automatically downloaded and installed, no additional configuration required.
 
 ```yaml
 # Adding mods
@@ -79,6 +79,74 @@ config:
   - modId: "5A64DE35CCD36695"
     name: "3rd Ranger Battalion Modpack"
     version: "0.7.11"
+```
+
+Adding a modern military modset to your server
+
+```yaml
+config:
+  mods:
+  - modId: "59A30ACC02650E71"
+    name: "Night Vision System"
+    version: "1.1.5"
+  - modId: "5A64DE35CCD36695"
+    name: "3rd Ranger Battalion Modpack"
+    version: "0.7.11"
+  - modId: "59664C0CB36501CD"
+    name: "BloodLust2"
+    version: "0.3.0"
+  - modId: "5AAF6D5352E5FCAB"
+    name: "Project Redline - Core"
+    version: "1.0.8"
+  - modId: "597D72161FD1ED1D"
+    name: "AttachmentsCompatibility"
+    version: "0.0.4"
+  - modId: "59BA0CE1B043CA92"
+    name: "Project Redline - MD500"
+    version: "1.0.2"
+  - modId: "5994AD5A9F33BE57"
+    name: "Game Master FX"
+    version: "1.0.50"
+  - modId: "5B02128D896F7DE8"
+    name: "STRYKER"
+    version: "1.1.11"
+  - modId: "5AB301290317994A"
+    name: "Suppressor System"
+    version: "1.0.6"
+  - modId: "5ABD0CB57F7E9EB1"
+    name: "RIS Laser Attachments"
+    version: "1.0.29"
+  - modId: "5B3ED33ADA805340"
+    name: "3RBN Weapons"
+    version: "0.7.0"
+```
+
+Adding a cold war modset to your server
+
+```yaml
+config:
+  mods:
+  - modId: "5994AD5A9F33BE57"
+    name: "Game Master FX"
+    version: "1.0.50"
+  - modId: "59674C21AA886D57"
+    name: "BetterMuzzleFlashes"
+    version: "1.3.2"
+  - modId: "59F44B92BEFF0CED"
+    name: "BetterVehicles"
+    version: "1.1.0"
+  - modId: "59673B6FBB95459F"
+    name: "BetterTracers"
+    version: "1.1.7"
+  - modId: "59651354B2904BA6"
+    name: "BetterHitsEffects"
+    version: "2.7.13"
+  - modId: "597D2A65AB73E657"
+    name: "BetterExplosives"
+    version: "1.1.5"
+  - modId: "59664C0CB36501CD"
+    name: "BloodLust2"
+    version: "0.3.0"
 ```
 
 # Acknowledgements

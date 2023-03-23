@@ -86,6 +86,9 @@ config:
   # -- Set the visibility of the server in the Server Browser.
   visible: true
 
+  # -- Apply additional startup parameters to the server.
+  startParameters: ""
+
   # -- number value, range 0 / 50..150, default: 0 
   # -- Minimum grass distance in meters. If set to 0 no distance is forced upon clients. 
   serverMinGrassDistance: 0
