@@ -29,6 +29,7 @@ jobs:
 
     - name: Build dependencies
       run: |
+        helm dependency update charts/arma-reforger
         helm dependency build charts/arma-reforger 
 
     - name: Run chart-releaser
