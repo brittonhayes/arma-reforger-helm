@@ -45,7 +45,7 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | config.serverConfigPath | string | `"/linuxgsm/lgsm/config-lgsm/armarserver/armarserver.server.json"` | Server config path |
 | config.serverMaxViewDistance | int | `1600` | number value, range 500..10000, default: 1600  |
 | config.serverMinGrassDistance | int | `0` | Minimum grass distance in meters. If set to 0 no distance is forced upon clients.  |
-| config.startParameters | string | `""` | Apply additional startup parameters to the server. |
+| config.startParameters | string | `"-logStats 10000"` | Apply additional startup parameters to the server. |
 | config.steamQueryPort | int | `17777` | Change Steam Query UDP port on which game listens to A2S requests  |
 | config.supportedGameClientTypes | list | `["PLATFORM_PC","PLATFORM_XBL"]` | A server cannot be Xbox-exclusive; if configured with only PLATFORM_XBL, the server will not start. |
 | config.visible | bool | `true` | Set the visibility of the server in the Server Browser. |
@@ -68,15 +68,11 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | persistence.data.enabled | bool | `true` |  |
 | persistence.data.size | string | `"40Gi"` | Size of the persistent volume claim (set this closer to 100Gi if you want to use quite a few mods) |
 | persistence.data.storageClass | string | `"hostpath"` |  |
-| persistence.profile.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.profile.annotations | object | `{}` |  |
-| persistence.profile.enabled | bool | `true` | WARNING: if you set this to false, your progress in Antistasi will be lost on a server restart |
-| persistence.profile.size | string | `"2Gi"` |  |
-| persistence.profile.storageClass | string | `"hostpath"` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | string | `nil` |  |
-| prometheus | object | `{"enabled":true}` | Enable prometheus metrics |
+| prometheus | object | `{"enabled":true,"prometheus-node-exporter":{"enabled":false}}` | Enable prometheus metrics |
 | prometheus.enabled | bool | `true` | Specifies whether the Prometheus Operator should be installed |
+| prometheus.prometheus-node-exporter | object | `{"enabled":false}` | Enable prometheus node exporter |
 | reloader | object | `{"enabled":true}` | https://github.com/stakater/Reloader |
 | reloader.enabled | bool | `true` | Specifies whether the Stakater Reloader controller should be installed |
 | replicas | int | `1` | Only one replica is supported at this time |

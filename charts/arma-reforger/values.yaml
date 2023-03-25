@@ -22,6 +22,13 @@ prometheus:
   # -- Specifies whether the Prometheus Operator should be installed
   enabled: true
 
+  # -- Enable prometheus node exporter
+  prometheus-node-exporter:
+    ## -- If false, node-exporter will not be installed
+    ## -- Disabled by default due to windows compatibility
+    ## -- issues with the node-exporter chart
+    enabled: false
+
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
@@ -98,7 +105,7 @@ config:
   visible: true
 
   # -- Apply additional startup parameters to the server.
-  startParameters: ""
+  startParameters: "-logStats 10000"
 
   # -- number value, range 0 / 50..150, default: 0 
   # -- Minimum grass distance in meters. If set to 0 no distance is forced upon clients. 
@@ -163,10 +170,10 @@ alerts:
 
 persistence:
   data:
-    # ARMA REFORGER Data (all game assets except the config/profiles/main)
+    # ARMA Reforger Data (all game assets, mods, etc.)
     enabled: true
     annotations: {}
-    ## arma Reforger data Persistent Volume Storage Class
+    ## ARMA Reforger data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
     ## If set to "-", storageClassName: "", which disables dynamic provisioning
     ## If undefined (the default) or set to null, no storageClassName spec is
@@ -179,33 +186,11 @@ persistence:
     ## Requires persistence.enabled: true
     ## If defined, PVC must be created manually before volume will be bound
     # existingClaim:
-
     accessMode: ReadWriteOnce
 
     # -- Size of the persistent volume claim (set this closer to 100Gi if you want to use quite a few mods)
     size: 40Gi
 
-  profile:
-    # ARMA REFORGER Profiles
-    # -- WARNING: if you set this to false, your progress in Antistasi will be lost on a server restart
-    enabled: true
-    annotations: {}
-    ## arma Reforger data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    storageClass: "hostpath"
-
-    ## A manually managed Persistent Volume and Claim
-    ## Requires persistence.enabled: true
-    ## If defined, PVC must be created manually before volume will be bound
-    # existingClaim:
-
-    accessMode: ReadWriteOnce
-    size: 2Gi
 
 # -- Specify credentials for the server
 credentials:

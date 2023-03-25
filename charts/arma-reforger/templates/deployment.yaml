@@ -62,9 +62,6 @@ spec:
             - name: data
               mountPath: /linuxgsm/serverfiles
               readOnly: false
-            - name: profile
-              mountPath: /linuxgsm/serverfiles/profiles
-              readOnly: false
             - name: tmp
               mountPath: /tmp
               readOnly: false
@@ -85,13 +82,6 @@ spec:
           {{- if .Values.persistence.data.enabled }}
           persistentVolumeClaim:
             claimName: {{ include "arma-reforger.fullname" . }}-data
-          {{- else }}
-          emptyDir: {}
-          {{- end }}
-        - name: profile
-          {{- if .Values.persistence.profile.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ include "arma-reforger.fullname" . }}-profile
           {{- else }}
           emptyDir: {}
           {{- end }}
