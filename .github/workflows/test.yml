@@ -1,4 +1,4 @@
-name: Chart Lint
+name: Test
 on:
   push:
     branches:
@@ -7,8 +7,8 @@ on:
     branches:
       - main
 jobs:
-  lint:
-    name: Lint
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
