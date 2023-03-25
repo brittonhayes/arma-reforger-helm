@@ -1,6 +1,6 @@
 # arma-reforger
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
 
 A Helm chart for ARMA reforger on LinuxGSM.
 
@@ -9,6 +9,13 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | Name | Email | Url |
 | ---- | ------ | --- |
 | Britton Hayes |  | <https://github.com/brittonhayes> |
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://prometheus-community.github.io/helm-charts | prometheus | 20.0.1 |
+| https://stakater.github.io/stakater-charts | reloader | 1.0.15 |
 
 ## Values
 
@@ -38,6 +45,7 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | config.serverConfigPath | string | `"/linuxgsm/lgsm/config-lgsm/armarserver/armarserver.server.json"` | Server config path |
 | config.serverMaxViewDistance | int | `1600` | number value, range 500..10000, default: 1600  |
 | config.serverMinGrassDistance | int | `0` | Minimum grass distance in meters. If set to 0 no distance is forced upon clients.  |
+| config.startParameters | string | `""` | Apply additional startup parameters to the server. |
 | config.steamQueryPort | int | `17777` | Change Steam Query UDP port on which game listens to A2S requests  |
 | config.supportedGameClientTypes | list | `["PLATFORM_PC","PLATFORM_XBL"]` | A server cannot be Xbox-exclusive; if configured with only PLATFORM_XBL, the server will not start. |
 | config.visible | bool | `true` | Set the visibility of the server in the Server Browser. |
@@ -67,6 +75,10 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | persistence.profile.storageClass | string | `"hostpath"` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | string | `nil` |  |
+| prometheus | object | `{"enabled":true}` | Enable prometheus metrics |
+| prometheus.enabled | bool | `true` | Specifies whether the Prometheus Operator should be installed |
+| reloader | object | `{"enabled":true}` | https://github.com/stakater/Reloader |
+| reloader.enabled | bool | `true` | Specifies whether the Stakater Reloader controller should be installed |
 | replicas | int | `1` | Only one replica is supported at this time |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |

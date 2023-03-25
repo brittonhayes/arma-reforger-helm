@@ -6,9 +6,19 @@ icon: https://raw.githubusercontent.com/brittonhayes/arma-reforger-helm/main/.gi
 maintainers:
 - name: Britton Hayes
   url: https://github.com/brittonhayes
-version: 0.3.1
+version: 0.3.2
 appVersion: "1.16.0"
 keywords:
 - arma-reforger
 - GameServers
 - linuxgsm
+dependencies:
+  - name: reloader
+    version: 1.0.15
+    repository: https://stakater.github.io/stakater-charts
+    condition: reloader.enabled
+
+  - name: prometheus
+    version: 20.0.1
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus.enabled

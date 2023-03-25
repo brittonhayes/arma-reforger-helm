@@ -1,0 +1,9 @@
+dependencies:
+- name: reloader
+  repository: https://stakater.github.io/stakater-charts
+  version: v1.0.15
+- name: prometheus
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 20.0.1
+digest: sha256:466a748b48c8e9066646d66eaeb2e8b0d7ec7b04aaf36ea84f9f70984403d66b
+generated: "2023-03-24T20:33:28.3461779-07:00"

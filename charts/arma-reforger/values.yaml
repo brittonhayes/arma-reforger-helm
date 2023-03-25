@@ -11,6 +11,17 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# -- Enable redeploying the pod when the configmap changes
+# -- https://github.com/stakater/Reloader
+reloader:
+  # -- Specifies whether the Stakater Reloader controller should be installed
+  enabled: true
+
+# -- Enable prometheus metrics
+prometheus:
+  # -- Specifies whether the Prometheus Operator should be installed
+  enabled: true
+
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true

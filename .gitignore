@@ -5,3 +5,4 @@ configs/secrets-*
 configs/common.cfg
 server/steamapps
 values.local.yaml
+/charts/*/charts
