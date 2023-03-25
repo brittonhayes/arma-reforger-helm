@@ -1,0 +1,10 @@
+suite: test reforger deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: deployment should render
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1

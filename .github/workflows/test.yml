@@ -22,3 +22,6 @@ jobs:
         with:
           command: lint
           config: ct.yaml
+
+      - name: Unit test helm charts
+        uses: d3adb5/helm-unittest-action@v2
