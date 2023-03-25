@@ -1,4 +1,4 @@
-# ARMA Reforger Helm Chart
+# 🐙 ARMA Reforger Helm Chart
 
 A helm chart for deploying an [ARMA Reforger](https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting) dedicated linux server to kubernetes clusters via helm.
 
@@ -35,7 +35,9 @@ helm upgrade -n arma-reforger --values values.yaml --install arma-reforger arma-
 
 ## Configuration
 
-Basic deployment with discord webhook alerting
+All configuration examples below demonstrate editing a `values.yaml` file and passing it to helm via the `--values` flag.
+
+### Basic deployment with discord webhook alerting
 
 ```yaml
 replicas: 1
@@ -69,7 +71,34 @@ resources:
     memory: 4G
 ```
 
+### Enable automated redeploy on config changes
+
+```yaml
+# -- Enable redeploying the pod when the configmap changes
+# -- https://github.com/stakater/Reloader
+reloader:
+  # -- Specifies whether the Stakater Reloader controller should be installed
+  enabled: true
+```
+
+### Enable metrics with prometheus
+
+```yaml
+# -- Enable prometheus metrics
+prometheus:
+  # -- Specifies whether the Prometheus Operator should be installed
+  enabled: true
+
+# -- Enable service monitor manifest
+serviceMonitor:
+  enabled: true
+```
+
+## Modding
+
 Add a couple mods to your server. All mods will be automatically downloaded and installed, no additional configuration required.
+
+### Basic Mods
 
 ```yaml
 # Adding mods
@@ -82,6 +111,8 @@ config:
     name: "3rd Ranger Battalion Modpack"
     version: "0.7.11"
 ```
+
+### Game Master Mods - Modern
 
 Adding a modern military modset to your server
 
@@ -122,6 +153,8 @@ config:
     name: "3RBN Weapons"
     version: "0.7.0"
 ```
+
+### Game Master Mods - Cold War 
 
 Adding a cold war modset to your server
 
