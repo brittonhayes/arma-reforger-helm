@@ -1,0 +1,22 @@
+suite: test reforger pvc
+templates:
+  - pvc.yaml
+tests:
+  - it: should render two persistent volume claims
+    set:
+      persistence.data.enabled: true
+      persistence.profile.enabled: true
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - hasDocuments:
+          count: 2
+  - it: should render one persistent volume claims
+    set:
+      persistence.data.enabled: true
+      persistence.profile.enabled: false
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - hasDocuments:
+          count: 1
