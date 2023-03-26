@@ -5,6 +5,6 @@ tests:
   - it: statefulset should render
     asserts:
       - isKind:
-          of: Statefulset
+          of: StatefulSet
       - hasDocuments:
           count: 1
