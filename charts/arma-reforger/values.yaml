@@ -27,7 +27,8 @@ prometheus:
     ## -- If false, node-exporter will not be installed
     ## -- Disabled by default due to windows compatibility
     ## -- issues with the node-exporter chart
-    enabled: false
+    hostRootFsMount:
+      enabled: false
 
 serviceAccount:
   # -- Specifies whether a service account should be created
