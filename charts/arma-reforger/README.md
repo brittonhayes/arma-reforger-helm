@@ -1,6 +1,6 @@
 # arma-reforger
 
-![Version: 0.5.2](https://img.shields.io/badge/Version-0.5.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.5.3](https://img.shields.io/badge/Version-0.5.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
 
 A Helm chart for ARMA reforger on LinuxGSM.
 
@@ -70,9 +70,9 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | persistence.data.storageClass | string | `"hostpath"` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | string | `nil` |  |
-| prometheus | object | `{"enabled":true,"prometheus-node-exporter":{"enabled":false}}` | Enable prometheus metrics |
+| prometheus | object | `{"enabled":true,"prometheus-node-exporter":{"hostRootFsMount":{"enabled":false}}}` | Enable prometheus metrics |
 | prometheus.enabled | bool | `true` | Specifies whether the Prometheus Operator should be installed |
-| prometheus.prometheus-node-exporter | object | `{"enabled":false}` | Enable prometheus node exporter |
+| prometheus.prometheus-node-exporter | object | `{"hostRootFsMount":{"enabled":false}}` | Enable prometheus node exporter |
 | reloader | object | `{"enabled":true}` | https://github.com/stakater/Reloader |
 | reloader.enabled | bool | `true` | Specifies whether the Stakater Reloader controller should be installed |
 | replicas | int | `1` | Only one replica is supported at this time |

@@ -6,7 +6,7 @@ icon: https://raw.githubusercontent.com/brittonhayes/arma-reforger-helm/main/.gi
 maintainers:
 - name: Britton Hayes
   url: https://github.com/brittonhayes
-version: 0.5.2
+version: 0.5.3
 appVersion: "1.16.0"
 keywords:
 - arma-reforger
