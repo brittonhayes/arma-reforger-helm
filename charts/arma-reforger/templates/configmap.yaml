@@ -37,7 +37,7 @@ data:
             "mods": [{{ include "mods" . }}]
         },
         "a2sQueryEnabled": true,
-        "steamQueryPort": 17777
+        "steamQueryPort": {{ .Values.config.steamQueryPort }},
     }
 ---
 apiVersion: v1
