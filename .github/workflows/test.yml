@@ -1,0 +1,27 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+    
+      - name: Lint Helm charts
+        uses: helm/chart-testing-action@v1.0.0
+        with:
+          command: lint
+          config: ct.yaml
+
+      - name: Unit test helm charts
+        uses: d3adb5/helm-unittest-action@v2

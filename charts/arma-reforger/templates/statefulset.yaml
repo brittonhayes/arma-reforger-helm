@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "arma-reforger.fullname" . }}
   namespace: {{ .Release.Namespace }}
@@ -10,11 +10,12 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  strategy:
-    type: Recreate
   {{- if .Values.replicas }}
   replicas: {{ .Values.replicas }}
   {{- end }}
+  serviceName: {{ include "arma-reforger.fullname" . }}
+  updateStrategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       {{- include "arma-reforger.selectorLabels" . | nindent 6 }}
@@ -30,6 +31,7 @@ spec:
         {{- include "arma-reforger.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: server
     spec:
+      terminationGracePeriodSeconds: 15
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -62,9 +64,6 @@ spec:
             - name: data
               mountPath: /linuxgsm/serverfiles
               readOnly: false
-            - name: profile
-              mountPath: /linuxgsm/serverfiles/profiles
-              readOnly: false
             - name: tmp
               mountPath: /tmp
               readOnly: false
@@ -88,13 +87,6 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
-        - name: profile
-          {{- if .Values.persistence.profile.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ include "arma-reforger.fullname" . }}-profile
-          {{- else }}
-          emptyDir: {}
-          {{- end }}
         - name: tmp
           emptyDir:
             medium: Memory
@@ -102,6 +94,23 @@ spec:
           emptyDir: {}
         - name: steamcmd
           emptyDir: {}
+      {{- if .Values.persistence.data.enabled }}
+      volumeClaimTemplates:
+      - metadata:
+          name: data
+          labels:
+            {{- include "arma-reforger.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: data
+        spec:
+          accessModes:
+            - {{ .Values.persistence.data.accessMode }}
+          resources:
+            requests:
+              storage: {{ .Values.persistence.data.size }}
+          {{- with .Values.persistence.data.storageClass }}
+          storageClassName: {{ . }}
+          {{- end }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

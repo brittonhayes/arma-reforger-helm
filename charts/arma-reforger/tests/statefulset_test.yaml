@@ -1,0 +1,10 @@
+suite: test reforger statefulset
+templates:
+  - statefulset.yaml
+tests:
+  - it: statefulset should render
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - hasDocuments:
+          count: 1

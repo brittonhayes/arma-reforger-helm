@@ -1,0 +1,10 @@
+suite: test service deployment
+templates:
+  - service.yaml
+tests:
+  - it: service should render
+    asserts:
+      - isKind:
+          of: Service
+      - hasDocuments:
+          count: 1

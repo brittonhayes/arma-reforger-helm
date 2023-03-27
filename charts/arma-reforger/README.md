@@ -1,6 +1,6 @@
 # arma-reforger
 
-![Version: 0.1.7](https://img.shields.io/badge/Version-0.1.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
 
 A Helm chart for ARMA reforger on LinuxGSM.
 
@@ -9,6 +9,13 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | Name | Email | Url |
 | ---- | ------ | --- |
 | Britton Hayes |  | <https://github.com/brittonhayes> |
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://prometheus-community.github.io/helm-charts | prometheus | 20.0.1 |
+| https://stakater.github.io/stakater-charts | reloader | 1.0.15 |
 
 ## Values
 
@@ -29,15 +36,16 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | config.gameHostRegisterBindAddress | string | `"0.0.0.0"` | When left out or empty, an attempt is made to automatically determine the IP address, but this will often fail and should not be relied upon as the server might not be reachable from public networks.  |
 | config.gameHostRegisterBindPort | int | `2001` | Otherwise, this is the UDP port that is forwarded to the server.   |
 | config.maxFPS | int | `60` | otherwise, the server can try to use all the available resources! |
-| config.mods | list | `[]` | List of mods |
+| config.mods | list | `[]` | version: "0.7.11"  |
 | config.name | string | `"arma-reforger-server.example.com"` | length 0..100 characters  |
 | config.networkViewDistance | int | `500` | Maximum network streaming range of replicated entities.  |
 | config.playerCountLimit | int | `20` | Set the maximum amount of players on the server.  |
 | config.region | string | `"US"` | ISO 3166-1 alpha-2 values are accepted - https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 |
-| config.scenarioID | string | `""` | See the listScenarios startup parameter to list available scenarios and obtain their .conf file path.  |
+| config.scenarioID | string | `"{ECC61978EDCC2B5A}Missions/23_Campaign.conf"` | See the listScenarios startup parameter to list available scenarios and obtain their .conf file path.  |
 | config.serverConfigPath | string | `"/linuxgsm/lgsm/config-lgsm/armarserver/armarserver.server.json"` | Server config path |
 | config.serverMaxViewDistance | int | `1600` | number value, range 500..10000, default: 1600  |
 | config.serverMinGrassDistance | int | `0` | Minimum grass distance in meters. If set to 0 no distance is forced upon clients.  |
+| config.startParameters | string | `"-logStats 10000"` | Apply additional startup parameters to the server. |
 | config.steamQueryPort | int | `17777` | Change Steam Query UDP port on which game listens to A2S requests  |
 | config.supportedGameClientTypes | list | `["PLATFORM_PC","PLATFORM_XBL"]` | A server cannot be Xbox-exclusive; if configured with only PLATFORM_XBL, the server will not start. |
 | config.visible | bool | `true` | Set the visibility of the server in the Server Browser. |
@@ -60,13 +68,13 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | persistence.data.enabled | bool | `true` |  |
 | persistence.data.size | string | `"40Gi"` | Size of the persistent volume claim (set this closer to 100Gi if you want to use quite a few mods) |
 | persistence.data.storageClass | string | `"hostpath"` |  |
-| persistence.profile.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.profile.annotations | object | `{}` |  |
-| persistence.profile.enabled | bool | `true` | WARNING: if you set this to false, your progress in Antistasi will be lost on a server restart |
-| persistence.profile.size | string | `"2Gi"` |  |
-| persistence.profile.storageClass | string | `"hostpath"` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | string | `nil` |  |
+| prometheus | object | `{"enabled":true,"prometheus-node-exporter":{"enabled":false}}` | Enable prometheus metrics |
+| prometheus.enabled | bool | `true` | Specifies whether the Prometheus Operator should be installed |
+| prometheus.prometheus-node-exporter | object | `{"enabled":false}` | Enable prometheus node exporter |
+| reloader | object | `{"enabled":true}` | https://github.com/stakater/Reloader |
+| reloader.enabled | bool | `true` | Specifies whether the Stakater Reloader controller should be installed |
 | replicas | int | `1` | Only one replica is supported at this time |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
@@ -75,6 +83,13 @@ A Helm chart for ARMA reforger on LinuxGSM.
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
+| serviceMonitor.enabled | bool | `false` | - If true, a ServiceMonitor CRD is created for a prometheus operator |
+| serviceMonitor.interval | string | `"10s"` |  |
+| serviceMonitor.labels | object | `{}` |  |
+| serviceMonitor.path | string | `"/metrics"` |  |
+| serviceMonitor.relabelings | list | `[]` |  |
+| serviceMonitor.scheme | string | `"http"` |  |
+| serviceMonitor.scrapeTimeout | string | `"2s"` |  |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------

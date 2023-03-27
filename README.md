@@ -1,6 +1,10 @@
-# ARMA Reforger Helm Chart
+# 🐙 ARMA Reforger Helm Chart
 
 A helm chart for deploying an [ARMA Reforger](https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting) dedicated linux server to kubernetes clusters via helm.
+
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/arma-reforger)](https://artifacthub.io/packages/search?repo=arma-reforger)
+[![Test](https://github.com/brittonhayes/arma-reforger-helm/actions/workflows/test.yml/badge.svg)](https://github.com/brittonhayes/arma-reforger-helm/actions/workflows/test.yml)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/brittonhayes/arma-reforger-helm?include_prereleases)
 
 [Helm Docs](./charts/arma-reforger/README.md)
 
@@ -31,7 +35,9 @@ helm upgrade -n arma-reforger --values values.yaml --install arma-reforger arma-
 
 ## Configuration
 
-Basic deployment with discord webhook alerting
+All configuration examples below demonstrate editing a `values.yaml` file and passing it to helm via the `--values` flag.
+
+### Basic deployment with discord webhook alerting
 
 ```yaml
 replicas: 1
@@ -46,6 +52,11 @@ config:
   gameHostBindPort: 32001 # Public Port of the server
   gameHostRegisterBindAddress: 73.XXX.XXX.XXX # Public IP of the server
   gameHostRegisterBindPort: 32001 # Public Port of the server
+  scenarioID: "{59AD59368755F41A}Missions/21_GM_Eden.conf" # Scenario ID for "Game Master - Everon"
+
+  # {90F086877C27B6F6}Missions/99_Tutorial.conf - Tutorial
+  # {ECC61978EDCC2B5A}Missions/23_Campaign.conf - Conflict
+  # {59AD59368755F41A}Missions/21_GM_Eden.conf - Game Master - Everon
 
 credentials:
   adminPassword: mysupersecretadminpassword
@@ -58,6 +69,119 @@ resources:
   requests:
     cpu: 4
     memory: 4G
+```
+
+### Enable automated redeploy on config changes
+
+```yaml
+# -- Enable redeploying the pod when the configmap changes
+# -- https://github.com/stakater/Reloader
+reloader:
+  # -- Specifies whether the Stakater Reloader controller should be installed
+  enabled: true
+```
+
+### Enable metrics with prometheus
+
+```yaml
+# -- Enable prometheus metrics
+prometheus:
+  # -- Specifies whether the Prometheus Operator should be installed
+  enabled: true
+
+# -- Enable service monitor manifest
+serviceMonitor:
+  enabled: true
+```
+
+## Modding
+
+Add a couple mods to your server. All mods will be automatically downloaded and installed, no additional configuration required.
+
+### Basic Mods
+
+```yaml
+# Adding mods
+config:
+  mods:
+  - modId: "59A30ACC02650E71"
+    name: "Night Vision System"
+    version: "1.1.3"
+  - modId: "5A64DE35CCD36695"
+    name: "3rd Ranger Battalion Modpack"
+    version: "0.7.11"
+```
+
+### Game Master Mods - Modern
+
+Adding a modern military modset to your server
+
+```yaml
+config:
+  mods:
+  - modId: "59A30ACC02650E71"
+    name: "Night Vision System"
+    version: "1.1.5"
+  - modId: "5A64DE35CCD36695"
+    name: "3rd Ranger Battalion Modpack"
+    version: "0.7.11"
+  - modId: "59664C0CB36501CD"
+    name: "BloodLust2"
+    version: "0.3.0"
+  - modId: "5AAF6D5352E5FCAB"
+    name: "Project Redline - Core"
+    version: "1.0.8"
+  - modId: "597D72161FD1ED1D"
+    name: "AttachmentsCompatibility"
+    version: "0.0.4"
+  - modId: "59BA0CE1B043CA92"
+    name: "Project Redline - MD500"
+    version: "1.0.2"
+  - modId: "5994AD5A9F33BE57"
+    name: "Game Master FX"
+    version: "1.0.50"
+  - modId: "5B02128D896F7DE8"
+    name: "STRYKER"
+    version: "1.1.11"
+  - modId: "5AB301290317994A"
+    name: "Suppressor System"
+    version: "1.0.6"
+  - modId: "5ABD0CB57F7E9EB1"
+    name: "RIS Laser Attachments"
+    version: "1.0.29"
+  - modId: "5B3ED33ADA805340"
+    name: "3RBN Weapons"
+    version: "0.7.0"
+```
+
+### Game Master Mods - Cold War 
+
+Adding a cold war modset to your server
+
+```yaml
+config:
+  mods:
+  - modId: "5994AD5A9F33BE57"
+    name: "Game Master FX"
+    version: "1.0.50"
+  - modId: "59674C21AA886D57"
+    name: "BetterMuzzleFlashes"
+    version: "1.3.2"
+  - modId: "59F44B92BEFF0CED"
+    name: "BetterVehicles"
+    version: "1.1.0"
+  - modId: "59673B6FBB95459F"
+    name: "BetterTracers"
+    version: "1.1.7"
+  - modId: "59651354B2904BA6"
+    name: "BetterHitsEffects"
+    version: "2.7.13"
+  - modId: "597D2A65AB73E657"
+    name: "BetterExplosives"
+    version: "1.1.5"
+  - modId: "59664C0CB36501CD"
+    name: "BloodLust2"
+    version: "0.3.0"
 ```
 
 # Acknowledgements

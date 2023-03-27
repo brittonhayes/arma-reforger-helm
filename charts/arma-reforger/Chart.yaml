@@ -2,12 +2,23 @@ apiVersion: v2
 name: arma-reforger
 description: A Helm chart for ARMA reforger on LinuxGSM.
 type: application
+icon: https://raw.githubusercontent.com/brittonhayes/arma-reforger-helm/main/.github/reforger-helm-square-logo.png
 maintainers:
 - name: Britton Hayes
   url: https://github.com/brittonhayes
-version: 0.1.8
+version: 0.5.1
 appVersion: "1.16.0"
 keywords:
 - arma-reforger
 - GameServers
 - linuxgsm
+dependencies:
+  - name: reloader
+    version: 1.0.15
+    repository: https://stakater.github.io/stakater-charts
+    condition: reloader.enabled
+
+  - name: prometheus
+    version: 20.0.1
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus.enabled

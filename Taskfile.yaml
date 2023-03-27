@@ -6,6 +6,7 @@ dotenv: ['.env']
 
 vars:
   ChartPath: ./charts/arma-reforger
+  ValuesFile: ./values.local.yaml 
 
 tasks:
   default:
@@ -21,18 +22,23 @@ tasks:
   helm:
     desc: Execute helm template and documentation generation
     cmds:
-    - helm template arma-reforger {{ .ChartPath }} | kubeconform -summary
+    - task: helm:tpl
     - helm-docs -c {{ .ChartPath }}
+
+  helm:tpl:
+    desc: Execute helm template
+    cmds:
+    - helm template arma-reforger {{ .ChartPath }} --values {{ .ValuesFile }}
 
   helm:install:
     desc: Install helm chart to cluster
     cmds:
-    - helm -n arma-reforger install arma-reforger {{ .ChartPath }} --values values.yaml
+    - helm -n arma-reforger install arma-reforger {{ .ChartPath }} --values {{ .ValuesFile }}
 
   helm:upgrade:
     desc: Release helm chart to cluster
     cmds:
-    - helm upgrade -n arma-reforger --values values.yaml --install arma-reforger {{ .ChartPath }}
+    - helm upgrade -n arma-reforger --values {{ .ValuesFile }} --install arma-reforger {{ .ChartPath }}
 
   helm:uninstall:
     desc: Uninstall helm chart from cluster

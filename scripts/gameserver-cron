@@ -1,0 +1,4 @@
+*/15 * * * * /linuxgsm/armarserver monitor > /dev/null 2>&1
+*/30 * * * * /linuxgsm/armarserver update > /dev/null 2>&1
+30 5 * * *  /linuxgsm/armarserver force-update > /dev/null 2>&1
+0 0 * * 0 /linuxgsm/armarserver update-lgsm > /dev/null 2>&1

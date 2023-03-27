@@ -1,0 +1,12 @@
+suite: test reforger pvc
+templates:
+  - pvc.yaml
+tests:
+  - it: should render one persistent volume claim
+    set:
+      persistence.data.enabled: true
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - hasDocuments:
+          count: 1

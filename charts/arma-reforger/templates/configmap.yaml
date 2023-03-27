@@ -34,10 +34,10 @@ data:
                 "fastValidation": {{ .Values.config.fastvalidation }},
                 "battlEye": {{ .Values.config.battleeye }}
             },
-            "mods": []
+            "mods": [{{ include "mods" . }}]
         },
         "a2sQueryEnabled": true,
-        "steamQueryPort": 17777
+        "steamQueryPort": {{ .Values.config.steamQueryPort }},
     }
 ---
 apiVersion: v1
@@ -56,6 +56,10 @@ data:
     ## Server Config
     {{- if .Values.config.serverConfigPath }}
     servercfgfullpath={{ .Values.config.serverConfigPath | quote }}
+    {{- end }}
+
+    {{- if .Values.config.startParameters }}
+    startparameters="-config ${servercfgfullpath} -profile ${serverprofilefullpath} -maxFPS ${maxfps} {{ .Values.config.startParameters }}"
     {{- end }}
 
     {{- if .Values.config.commonConfigPath }}

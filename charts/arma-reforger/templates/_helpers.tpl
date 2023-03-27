@@ -99,3 +99,13 @@ noLookupWhenTemplating
 noLookupWhenTemplating
 {{- end -}}
 {{- end -}}
+
+{{- define "mods" -}}
+{{- if .Values.config.mods -}}
+    {{ $first := true }}
+    {{- range $v := .Values.config.mods }}
+    {{- if $first}}{{$first = false}}{{else}},{{end -}}
+    { "modId": {{ $v.modId | quote }}, "name": {{ $v.name | quote }}, "version": {{ $v.version | quote }} }
+    {{- end }}
+{{- end }}
+{{- end -}}
